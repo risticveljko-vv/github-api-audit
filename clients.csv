@@ -14,4 +14,4 @@ release-please,A,googleapis/release-please,v17.11.2,05c6a4f71022304d4edad24ea90c
 mise-action,C,jdx/mise-action,v5.2.8,d5574b52816a478f9d4e6529a3f6ff17a8a36785,src/**/*.ts,octokit;route,,Sets up the dev and QA toolchain in Veljko's CI (env contract)
 mise,C,jdx/mise,v2026.11.8,a4a1996f49779db556570678c81f658e5a28fe19,crates/mise-util/src/github.rs,rust-format,GET,The tool manager behind Veljko's env contract; reads GitHub releases and tags to install tools (this file only reads)
 deployments,C,bobheadxi/deployments,v1.5.0,648679e8e4915b27893bd7dbc35cb504dc915bc8,src/**/*.ts,octokit;route,,Deployment and deployment-status bookkeeping for preview and QA environments
-deploy-pages,C,actions/deploy-pages,v5.0.1,368f82528645a54fb793d4d04e342629a3f51346,src/**/*.ts,octokit;route,,Official action that deploys GitHub Pages (preview and docs sites)
+deploy-pages,C,actions/deploy-pages,v5.0.1,368f82528645a54fb793d4d04e342629a3f51346,src/**/*.js,octokit;route,,Official action that deploys GitHub Pages (preview and docs sites)
