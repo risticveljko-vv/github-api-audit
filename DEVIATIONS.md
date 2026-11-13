@@ -16,6 +16,7 @@ All against a local Prism 5.16.0 mock of the frozen spec on 2026-11-13. Nothing 
 - **Accept header per mode.** Prism answers 406 to `application/vnd.github+json`, so the mock run sends `application/json`. The live run sends GitHub's recommended `application/vnd.github+json`.
 - **Redirects are not followed** (`--max-redirects 0`), so a 302 to a download host is checked as documented and never followed.
 - **`comment_id` means two things.** It is an issue comment in `issues/get-comment` and a review comment in `pulls/get-review-comment`. The Schemathesis config sets it per operation; the dry run confirmed each operation got its own value.
+- **Redocly keeps only 100 problems by default** (found in Run 0, 2026-11-13 23:36 UTC, before any call to GitHub). Its JSON report held 100 of 1,588 problems. `static:redocly` now passes `--max-problems 100000`, and the rerun holds all 1,588. Spectral was not affected. Run 0 counts use the full report.
 - The mock's own failures (undocumented status codes, schema mismatches) say nothing about GitHub and are not leads.
 
 ## D2: repo private for four minutes before Run 0 (2026-11-13, 23:17 to 23:21 UTC)

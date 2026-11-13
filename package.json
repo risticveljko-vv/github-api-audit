@@ -7,7 +7,7 @@
     "fetch-clients": "sh scripts/fetch-clients.sh",
     "frame": "python3 -I scripts/frame.py",
     "static:spectral": "spectral lint spec/api.github.com.2026-03-10.json --ruleset rules/.spectral.yaml --format json --output runs/run0-spectral.json",
-    "static:redocly": "redocly lint spec/api.github.com.2026-03-10.json --config rules/redocly.yaml --format json > runs/run0-redocly.json",
+    "static:redocly": "redocly lint spec/api.github.com.2026-03-10.json --config rules/redocly.yaml --format json --max-problems 100000 > runs/run0-redocly.json",
     "mock": "prism mock spec/api.github.com.2026-03-10.json --port 4010",
     "dry-run": "node harness/run.mjs mock",
     "run:live": "node --env-file=.env harness/run.mjs live"
