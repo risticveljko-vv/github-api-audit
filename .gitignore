@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+node_modules/
+spec/*.json
+.clients/
+runs/
+.schemathesis/
+.hypothesis/
+__pycache__/

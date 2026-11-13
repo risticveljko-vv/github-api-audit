@@ -1,0 +1,17 @@
+client_id,use_case,repo,ref,pin,scope,extractors,default_method,anchor
+mcp-server,B,github/github-mcp-server,v2.1.0,4bcdcdf8d7beee98c9448e73e257308280924cc4,pkg/**/*.go,go-github;go-path,,GitHub's official MCP server: the tools coding agents (Claude Code; Copilot; Cursor) call on GitHub
+gh-agent,B,cli/cli,v2.104.0,3d5a9e355a837f2f5ee78d7484c118cc1342ad1a,pkg/cmd/pr/**/*.go;pkg/cmd/issue/**/*.go;pkg/cmd/repo/**/*.go;pkg/cmd/search/**/*.go;pkg/cmd/label/**/*.go,go-path,,gh commands a coding agent runs in a terminal session (Veljko's Claude Code sessions use gh)
+gh-actions,A,cli/cli,v2.104.0,3d5a9e355a837f2f5ee78d7484c118cc1342ad1a,pkg/cmd/run/**/*.go;pkg/cmd/workflow/**/*.go;pkg/cmd/cache/**/*.go;pkg/cmd/release/**/*.go;pkg/cmd/secret/**/*.go;pkg/cmd/variable/**/*.go,go-path,,gh commands used in CI scripts and by hand to drive Actions and releases
+gh-qa,C,cli/cli,v2.104.0,3d5a9e355a837f2f5ee78d7484c118cc1342ad1a,pkg/cmd/ruleset/**/*.go;pkg/cmd/pr/checks/**/*.go,go-path,,gh commands for branch rules and PR checks
+checkout,A,actions/checkout,v7.0.1,3d3c42e5aac5ba805825da76410c181273ba90b1,src/**/*.ts,octokit;route,,The first step of almost every workflow; first step of Veljko's CI
+github-script,A,actions/github-script,v9.0.0,3a2844b7e9c422d3c10d287c895573f7108da1b3,README.md,octokit;route,,The documented examples people copy into workflows to script the API
+download-artifact,A,actions/download-artifact,v8.0.2,9000827ccba6bdab643e8b6fd33ac0654aef8333,src/**/*.ts,octokit;route,,Passing build output between jobs and runs
+upload-artifact,A,actions/upload-artifact,v7.0.2,cf430e030ddbb5b0abf93d22962f4752f3646cd9,src/**/*.ts,octokit;route,,Passing build output between jobs and runs
+actions-artifact-lib,A,npm:@actions/artifact,6.3.1,sha512-DBXgdB9T4yj2KSe0tFg+MTi9T5se+16bdrFQh+3Y6Nq1lZ3gYQk1BjHoTof+7Zf36bEAlfVMf+8ifRKeyGJugQ==,package/lib/**/*.js,octokit;route,,The library both artifact actions call (version from their package-lock.json)
+cache,A,actions/cache,v6.1.0,55cc8345863c7cc4c66a329aec7e433d2d1c52a9,src/**/*.ts,octokit;route,,Dependency caching in CI
+actions-cache-lib,A,npm:@actions/cache,6.1.0,sha512-LVqybSbzhBp2uAETOQ3HnVjXA4AcjavgMH+LCr+cjgO+PZfciv/1QAgoW+esXBaAhvDid+vXeV70GGJpAh4V5Q==,package/lib/**/*.js,octokit;route,,The library actions/cache calls (version from its package-lock.json)
+release-please,A,googleapis/release-please,v17.11.2,05c6a4f71022304d4edad24ea90c1c16324503d5,src/**/*.ts,octokit;route,,Release automation (tags; changelogs; GitHub releases) behind release-please-action
+mise-action,C,jdx/mise-action,v5.2.8,d5574b52816a478f9d4e6529a3f6ff17a8a36785,src/**/*.ts,octokit;route,,Sets up the dev and QA toolchain in Veljko's CI (env contract)
+mise,C,jdx/mise,v2026.11.8,a4a1996f49779db556570678c81f658e5a28fe19,crates/mise-util/src/github.rs,rust-format,GET,The tool manager behind Veljko's env contract; reads GitHub releases and tags to install tools (this file only reads)
+deployments,C,bobheadxi/deployments,v1.5.0,648679e8e4915b27893bd7dbc35cb504dc915bc8,src/**/*.ts,octokit;route,,Deployment and deployment-status bookkeeping for preview and QA environments
+deploy-pages,C,actions/deploy-pages,v5.0.1,368f82528645a54fb793d4d04e342629a3f51346,src/**/*.ts,octokit;route,,Official action that deploys GitHub Pages (preview and docs sites)
