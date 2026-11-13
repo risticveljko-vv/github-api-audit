@@ -18,8 +18,8 @@ All against a local Prism 5.16.0 mock of the frozen spec on 2026-11-13. Nothing 
 - **`comment_id` means two things.** It is an issue comment in `issues/get-comment` and a review comment in `pulls/get-review-comment`. The Schemathesis config sets it per operation; the dry run confirmed each operation got its own value.
 - The mock's own failures (undocumented status codes, schema mismatches) say nothing about GitHub and are not leads.
 
-## D2: repo private during the runs (2026-11-13 23:17 UTC until the runs end)
+## D2: repo private for four minutes before Run 0 (2026-11-13, 23:17 to 23:21 UTC)
 
-`PREREGISTRATION.md` freezes the method by making this repo public before any check runs. That happened: the freeze commit `dc466ee` was public from 2026-11-13. At 23:17 UTC the same day, before Run 0 or any call to GitHub, Veljko made the repo private for the duration of the runs. It becomes public again when the runs end, and this entry gets the date.
+`PREREGISTRATION.md` freezes the method by making this repo public before any check runs. The freeze commit `dc466ee` was public from 2026-11-13. At 23:17 UTC Veljko made the repo private, meaning to keep it private during the runs. At 23:21 UTC he reversed that decision, and the repo went public again. The original method stands: the repo stays public for the whole audit.
 
-What this changes: while the repo is private, nobody outside can watch the method stay unchanged. What it does not change: the freeze commit and its hash stay in the history, and any later change to the method still has to appear in this file with its reason. Results were never going to be pushed during the runs (`runs/` is git-ignored), so the public record loses no results. Nothing in the frame, the checks or the error codes changes.
+No check ran and no call went to GitHub while the repo was private. The only commits made in that time are this note and `baecd30` (the setup log and D1), and both are public now. Nothing in the frame, the checks or the error codes changes.
