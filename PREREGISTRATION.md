@@ -1,6 +1,8 @@
 # Pre-registration: GitHub REST API, docs versus behaviour
 
-Status: **DRAFT, not frozen.** Veljko has not approved it. The freeze is the first public commit of this repo, made before any check runs (Run 0 included). After the freeze, any change to this file is a deviation and goes in `DEVIATIONS.md` with its reason.
+Status: **FROZEN on 2026-11-13** by the first public commit of this repo, made before any check runs (Run 0 included). After the freeze, any change to this file is a deviation and goes in `DEVIATIONS.md` with its reason.
+
+**Decisions taken before the freeze (Veljko, 2026-11-13):** (1) spec version 2026-03-10, sent as `X-GitHub-Api-Version` on every request; (2) the 16 clients in `clients.csv` approved as they are; the headline uses use cases A and B, and C (10 testable operations) is reported beside them; (3) his own account `risticveljko-vv`, since the audit is part of his portfolio and content work; (4) one fine-grained, read-only token limited to the test repo; no classic token, no organization; (5) test repo `api-audit-test`, audit repo `github-api-audit`; (6) the spec file is not committed: the commit-pinned URL and its SHA-256 identify it; (7) freeze by making this repo public before any check, the same standard as the Neon audit and every later audit in the series; (8) the poll is about use case B, with Neon's bands; (9) E4 without the "input that fixes it" condition, and the new E8 "documented behaviour contradicted".
 
 Second audit in the series "A content engineer's stack, checked". GitHub is where Veljko's repos, READMEs, releases and CI live.
 

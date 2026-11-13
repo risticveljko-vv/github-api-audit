@@ -4,7 +4,7 @@ Does GitHub's REST API do what its OpenAPI description says, for the read calls 
 
 Second audit in "A content engineer's stack, checked". GitHub is where my repos, READMEs, releases and CI live. My CI starts with actions/checkout and sets up its toolchain with mise. My coding-agent sessions read and write GitHub through gh. So the question is practical: when an agent or a workflow reads GitHub's API description literally, does the API behave as described?
 
-- Method and rules, fixed before any result: [PREREGISTRATION.md](PREREGISTRATION.md) (**draft, not frozen**)
+- Method and rules, fixed before any result: [PREREGISTRATION.md](PREREGISTRATION.md) (**frozen 2026-11-13**)
 - Which operations, and why: [FRAME.md](FRAME.md), [frame.csv](frame.csv) (145 GET operations, 102 testable), [calls.csv](calls.csv) (every client call site, linked to its line), [clients.csv](clients.csv) (the pinned clients)
 - Frozen spec: `api.github.com.2026-03-10.json` from [github/rest-api-description](https://github.com/github/rest-api-description) at commit `bd6df26`, MIT licence. `sh scripts/fetch-spec.sh` downloads it and checks the SHA-256.
 - Setup log (test repo, token; no secrets): [SETUP.md](SETUP.md)
@@ -12,7 +12,7 @@ Second audit in "A content engineer's stack, checked". GitHub is where my repos,
 - Harness (Schemathesis config, GET-only and frame guards, runner): [harness/](harness/)
 - Run sheet: [RUNSHEET.md](RUNSHEET.md)
 
-Status: draft. Nothing has been sent to api.github.com.
+Status: method frozen 2026-11-13. Nothing has been sent to api.github.com yet.
 
 ## Commands
 

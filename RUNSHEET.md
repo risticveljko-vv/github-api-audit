@@ -2,7 +2,7 @@
 
 Every step runs in the foreground. Nothing is scheduled or left running. ⟦V⟧ = Veljko does it. ⟦C⟧ = Claude does it. Nothing calls api.github.com before step 5.
 
-## 0. Decisions first (⟦V⟧, about 10 min)
+## 0. Decisions first (⟦V⟧, about 10 min) — done 2026-11-13, all as recommended; recorded in PREREGISTRATION.md
 
 The decisions and Claude's recommendations are in the handoff report and repeated here in short:
 
