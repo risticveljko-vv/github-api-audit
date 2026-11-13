@@ -1,12 +1,13 @@
-# Accept is set per mode by run.mjs: GitHub's recommended application/vnd.github+json live,
-# application/json against the Prism mock (Prism answers 406 to the vendor type).
+# Accept comes from AUDIT_ACCEPT, set per mode by run.mjs: GitHub's recommended application/vnd.github+json live,
+# application/json against the Prism mock (Prism answers 406 to the vendor type). All headers live here: a -H flag on
+# the command line replaces this whole table in Schemathesis 4.32.7 (found after the first live attempt; DEVIATIONS D3).
 # IDs are not secrets. The token comes from the environment (AUDIT_KEY), set by harness/run.mjs.
 # Values marked AUDIT_* are read from the test repo by run.mjs before the run (see seed() there),
 # or come from SETUP.md for objects Veljko creates by hand.
 hooks = "harness/hooks.py"
 workers = 1
 rate-limit = "30/m"
-headers = { Authorization = "Bearer ${AUDIT_KEY}", X-GitHub-Api-Version = "2026-03-10", User-Agent = "github-api-audit (risticveljko-vv)" }
+headers = { Authorization = "Bearer ${AUDIT_KEY}", Accept = "${AUDIT_ACCEPT}", X-GitHub-Api-Version = "2026-03-10", User-Agent = "github-api-audit (risticveljko-vv)" }
 
 [parameters]
 "path.owner" = "${AUDIT_OWNER}"

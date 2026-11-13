@@ -110,7 +110,7 @@ try {
     // One anchored regex over the frame's operation IDs (repeating --include-operation-id did not narrow the
     // selection in the first dry run; the frame guard in hooks.py refused the rest before sending).
     "--include-operation-id-regex", `^(${ops.map(o => o.operation_id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})$`,
-    "-H", `Accept: ${mode === "live" ? "application/vnd.github+json" : "application/json"}`,
+    // No -H flags: a CLI header replaces the config's whole header table (token and API version included).
     // The mock needs no rate limit; the live run keeps the config's 30 a minute.
     ...(mode === "mock" ? ["--rate-limit", "6000/m"] : []),
     // Do not follow redirects: logs and archives answer 302 (documented) to a download host outside api.github.com.
@@ -120,6 +120,7 @@ try {
   const r = spawnSync("uvx", args, { stdio: "inherit", env: {
     ...process.env, ...ids,
     AUDIT_KEY: mode === "live" ? process.env.GITHUB_AUDIT_TOKEN : "mock",
+    AUDIT_ACCEPT: mode === "live" ? "application/vnd.github+json" : "application/json",
     AUDIT_ALLOWED_OPS: ops.map(o => `GET ${o.path}`).join("\n") } });
   writeFileSync(`${outDir}/exit-code.json`, JSON.stringify({ schemathesis: r.status, operations: ops.length }) + "\n");
   console.log(`\nReports in ${outDir}. Exit code: ${r.status}`);
