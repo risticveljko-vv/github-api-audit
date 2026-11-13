@@ -1,6 +1,12 @@
 # Deviations from the pre-registration
 
-Each change to the frozen method, with when and why. The pre-registration is not frozen yet, so there are no deviations.
+Each change to the frozen method, with when and why.
+
+## D1: test repo seeded with the `gh` CLI, not by hand (2026-11-13)
+
+`PREREGISTRATION.md` says the test repo is set up by hand in the GitHub web UI and that Veljko starts the seed run by hand. On Veljko's go, Claude did the same ten steps of `RUNSHEET.md` with the `gh` CLI and a local git clone, and started the seed run with `gh workflow run`. The reason is time: about 3 minutes instead of about 25.
+
+The objects, names, values and their order are the ones in the run sheet. Issue #1 and pull request #2 have the planned numbers. Setup used Veljko's normal `gh` login, which has write access. The audit token is still separate, fine-grained and read-only, and the harness still creates nothing. Nothing in the frame, the checks or the error codes changes. The values are in `SETUP.md`.
 
 ## Harness notes from the pre-freeze dry runs (not deviations)
 
