@@ -1,0 +1,68 @@
+# Dev and QA environment. Same task names in every repo:
+# setup, check, test, test:live, qa. Run with `mise run <task>`.
+# mise.lock was composed from the lock entries of ~/Code/evidently (node) and ~/Code/painpoint-radar (python),
+# the same exact versions, so that no lock step had to ask GitHub's API for release assets before the freeze.
+
+[tools]
+node = "22"
+python = "3.13"
+
+[env]
+# Token file for the live run. Loaded only by node --env-file, never by mise or a shell.
+ENV_FILE = ".env"
+
+[tasks.setup]
+description = "Install pinned tools and dependencies"
+run = "npm ci --no-audit --no-fund"
+
+[tasks.check]
+description = "Static checks, no tests: Python compiles, Node and shell scripts parse"
+run = '''
+set -e
+python -I -m py_compile scripts/frame.py tests/test_frame.py
+node --check harness/run.mjs
+node --check scripts/day2-repro.mjs
+for f in scripts/*.sh; do sh -n "$f"; done
+python -I -c "import tomllib; tomllib.load(open('harness/schemathesis.toml','rb'))"
+'''
+
+[tasks.test]
+description = "Offline tests: frame mapping and eligibility, Run 0 rules fire, day-2 script prints"
+run = '''
+set -e
+python -I -m unittest discover -s tests
+sh scripts/check-rules.sh
+node scripts/day2-repro.mjs tests/fixtures/leads.json --dry > /dev/null
+'''
+
+[tasks.frame]
+description = "Fetch the frozen spec and pinned clients (github.com and npm, not the API), recompute, compare with frame.csv"
+run = '''
+set -e
+sh scripts/fetch-spec.sh
+sh scripts/fetch-clients.sh
+python -I scripts/frame.py --check
+'''
+
+[tasks.dry-run]
+description = "Harness against a local Prism mock of the frozen spec; sends nothing to GitHub"
+run = "node harness/run.mjs mock"
+
+[tasks."test:live"]
+description = "Run 1: GET requests to api.github.com with the audit token. Only on Veljko's go, after the freeze"
+run = "node --env-file=$ENV_FILE harness/run.mjs live"
+
+[tasks.qa]
+description = "Clean room: fresh clone of HEAD, then setup, check, test"
+run = '''
+set -e
+dir=$(mktemp -d)
+git clone -q . "$dir/repo"
+cd "$dir/repo"
+mise trust -q
+mise install -q
+mise run setup
+mise run check
+mise run test
+echo "QA passed on $(git rev-parse --short HEAD)"
+'''

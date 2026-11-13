@@ -1,0 +1,24 @@
+# Copy to .github/workflows/seed.yml in the test repo (api-audit-test), then start it once by hand
+# (Actions tab, "seed", Run workflow). It creates the objects the audit reads: a workflow run, a job,
+# job logs, a cache, an artifact, and a deployment to the "audit" environment with its statuses.
+# It writes nothing outside the test repo. Actions are pinned to the commits the frame was computed from.
+name: seed
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    environment: audit
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: seed-cache
+          key: audit-seed-${{ github.run_id }}
+      - run: mkdir -p seed-cache out && date -u > seed-cache/stamp && echo "audit seed" > out/seed.txt
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: audit-seed
+          path: out/seed.txt
+          retention-days: 30

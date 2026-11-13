@@ -1,0 +1,20 @@
+{
+  "name": "github-api-audit",
+  "private": true,
+  "description": "Does GitHub's REST API do what its OpenAPI description says, for the read operations real clients call?",
+  "scripts": {
+    "fetch-spec": "sh scripts/fetch-spec.sh",
+    "fetch-clients": "sh scripts/fetch-clients.sh",
+    "frame": "python3 -I scripts/frame.py",
+    "static:spectral": "spectral lint spec/api.github.com.2026-03-10.json --ruleset rules/.spectral.yaml --format json --output runs/run0-spectral.json",
+    "static:redocly": "redocly lint spec/api.github.com.2026-03-10.json --config rules/redocly.yaml --format json > runs/run0-redocly.json",
+    "mock": "prism mock spec/api.github.com.2026-03-10.json --port 4010",
+    "dry-run": "node harness/run.mjs mock",
+    "run:live": "node --env-file=.env harness/run.mjs live"
+  },
+  "devDependencies": {
+    "@redocly/cli": "2.72.0",
+    "@stoplight/prism-cli": "5.16.0",
+    "@stoplight/spectral-cli": "6.17.0"
+  }
+}

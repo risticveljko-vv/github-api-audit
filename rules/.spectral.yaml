@@ -1,0 +1,5 @@
+# Run 0 counts only examples that fail their own schema (E5). Everything else in spectral:oas is quality, not accuracy.
+extends: [[spectral:oas, off]]
+rules:
+  oas3-valid-media-example: error
+  oas3-valid-schema-example: error

@@ -1,0 +1,5 @@
+# Second opinion for E5 only.
+extends: []
+rules:
+  no-invalid-media-type-examples: error
+  no-invalid-schema-examples: error

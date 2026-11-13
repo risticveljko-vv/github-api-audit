@@ -1,0 +1,21 @@
+{
+  "openapi": "3.0.3",
+  "info": {"title": "Rule check fixture", "version": "1"},
+  "servers": [{"url": "http://127.0.0.1:4010"}],
+  "paths": {
+    "/count": {
+      "get": {
+        "operationId": "count/get",
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {"application/json": {
+              "schema": {"type": "object", "required": ["count"], "properties": {"count": {"type": "integer"}}},
+              "example": {"count": "three"}
+            }}
+          }
+        }
+      }
+    }
+  }
+}

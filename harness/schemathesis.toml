@@ -1,0 +1,46 @@
+# Accept is set per mode by run.mjs: GitHub's recommended application/vnd.github+json live,
+# application/json against the Prism mock (Prism answers 406 to the vendor type).
+# IDs are not secrets. The token comes from the environment (AUDIT_KEY), set by harness/run.mjs.
+# Values marked AUDIT_* are read from the test repo by run.mjs before the run (see seed() there),
+# or come from SETUP.md for objects Veljko creates by hand.
+hooks = "harness/hooks.py"
+workers = 1
+rate-limit = "30/m"
+headers = { Authorization = "Bearer ${AUDIT_KEY}", X-GitHub-Api-Version = "2026-03-10", User-Agent = "github-api-audit (risticveljko-vv)" }
+
+[parameters]
+"path.owner" = "${AUDIT_OWNER}"
+"path.repo" = "${AUDIT_REPO}"
+"path.username" = "${AUDIT_OWNER}"
+"path.branch" = "main"
+"path.ref" = "main"
+"path.tag" = "${AUDIT_TAG}"
+"path.path" = "README.md"
+"path.basehead" = "${AUDIT_FIRST_SHA}...main"
+"path.sha" = "${AUDIT_HEAD_SHA}"
+"path.commit_sha" = "${AUDIT_HEAD_SHA}"
+"path.tree_sha" = "${AUDIT_TREE_SHA}"
+"path.file_sha" = "${AUDIT_FILE_SHA}"
+"path.tag_sha" = "${AUDIT_TAG_SHA}"
+"path.issue_number" = "${AUDIT_ISSUE_NUMBER}"
+"path.pull_number" = "${AUDIT_PULL_NUMBER}"
+"path.comment_id" = "${AUDIT_COMMENT_ID}"
+"path.review_id" = "${AUDIT_REVIEW_ID}"
+"path.release_id" = "${AUDIT_RELEASE_ID}"
+"path.run_id" = "${AUDIT_RUN_ID}"
+"path.attempt_number" = "1"
+"path.job_id" = "${AUDIT_JOB_ID}"
+"path.workflow_id" = "${AUDIT_WORKFLOW_ID}"
+"path.artifact_id" = "${AUDIT_ARTIFACT_ID}"
+"path.archive_format" = "zip"
+"path.deployment_id" = "${AUDIT_DEPLOYMENT_ID}"
+"path.environment_name" = "audit"
+"path.name" = "AUDIT_VAR"
+"path.ruleset_id" = "${AUDIT_RULESET_ID}"
+"path.gist_id" = "${AUDIT_GIST_ID}"
+"path.ghsa_id" = "${AUDIT_GHSA_ID}"
+
+# comment_id means a PR review comment here, not an issue comment.
+[[operations]]
+include-operation-id = "pulls/get-review-comment"
+parameters = { "path.comment_id" = "${AUDIT_REVIEW_COMMENT_ID}" }
