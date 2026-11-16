@@ -36,3 +36,23 @@ All against a local Prism 5.16.0 mock of the frozen spec on 2026-11-13. Nothing 
 `PREREGISTRATION.md` freezes the method by making this repo public before any check runs. The freeze commit `dc466ee` was public from 2026-11-13. At 23:17 UTC Veljko made the repo private, meaning to keep it private during the runs. At 23:21 UTC he reversed that decision, and the repo went public again. The original method stands: the repo stays public for the whole audit.
 
 No check ran and no call went to GitHub while the repo was private. The only commits made in that time are this note and `baecd30` (the setup log and D1), and both are public now. Nothing in the frame, the checks or the error codes changes.
+
+## D4: label for a response field that the schema forbids, and how findings are named (2026-11-16)
+
+`PREREGISTRATION.md` says that undocumented extra fields are not counted "unless the schema forbids them". So a response field that the schema forbids (the schema sets `additionalProperties: false` and does not list the field) counts as an error. The table of error codes has no code that names this case: E2 is a missing field, and E3 is "a value breaks the documented type, enum, format or nullability".
+
+Decision (Veljko, 2026-11-16, after the day-2 checks, on the advice of both readers): such a finding is labelled **E3**. The reading is that the documented type of the response is the whole object schema, including `additionalProperties: false`, and a response with a forbidden field breaks that type. This is an interpretation, made after results were seen. It changes no count: the pre-registration already says the case counts. It only fixes which label the finding carries. Every finding labelled this way is marked "E3 (forbidden extra field, see D4)" in the report, so a reader can separate it from a wrong type, enum, format or nullability.
+
+**One schema, several operations.** When one defect in a shared schema shows in several tested operations, each operation counts in the metric (the metric is per operation). The findings are filed with GitHub as one issue that names every affected operation, because one fix resolves them. The pre-registration says "one issue per confirmed finding"; this is the same rule applied per root cause.
+
+**How findings are named,** so that people and tools read the results the same way:
+
+| Label | Meaning |
+| --- | --- |
+| `E<code>-<n>` (for example `E3-1`) | A confirmed error: reproduced with a plain request, repeated at least 24 hours later, checked by a second reader. Counts in the metric. |
+| `NC-<n>` | Not confirmed: a lead that one of the three checks did not pass. Listed, not counted. |
+| `NT-<n>` | Not tested as designed: the operation could not be tested the way the frame says (for example a missing token permission). Reported in the skip count with its reason. |
+| `LOG-<n>` | Logged separately: a real gap that the pre-registration excludes from the count. |
+
+Each finding also carries a severity (S1 to S3), the operation ID from `frame.csv`, the JSON pointer into the frozen description, and a root-cause label (`R<n>`) that is shared by findings with one cause.
+
