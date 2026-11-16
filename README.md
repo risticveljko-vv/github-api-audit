@@ -12,7 +12,7 @@ Second audit in "A content engineer's stack, checked". GitHub is where my repos,
 - Harness (Schemathesis config, GET-only and frame guards, runner): [harness/](harness/)
 - Run sheet: [RUNSHEET.md](RUNSHEET.md)
 
-Status: method frozen 2026-11-13. Nothing has been sent to api.github.com yet.
+Status: method frozen 2026-11-13. Run 1 ran on 2026-11-13 and the unchanged repeat on 2026-11-16. Findings are not published yet: GitHub is told first, and nothing is posted until 14 days after that.
 
 ## Commands
 
