@@ -22,6 +22,7 @@ set -e
 python -I -m py_compile scripts/frame.py tests/test_frame.py
 node --check harness/run.mjs
 node --check scripts/day2-repro.mjs
+python -I -m py_compile scripts/check-body.py
 for f in scripts/*.sh; do sh -n "$f"; done
 python -I -c "import tomllib; tomllib.load(open('harness/schemathesis.toml','rb'))"
 '''

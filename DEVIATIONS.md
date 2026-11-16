@@ -56,3 +56,19 @@ Decision (Veljko, 2026-11-16, after the day-2 checks, on the advice of both read
 
 Each finding also carries a severity (S1 to S3), the operation ID from `frame.csv`, the JSON pointer into the frozen description, and a root-cause label (`R<n>`) that is shared by findings with one cause.
 
+## D5: two account permissions added to the token after Run 1; two operations tested with plain requests (2026-11-16)
+
+`RUNSHEET.md` step 2 lists two account permissions for the token, both read-only: "Codespaces user secrets" and "Starring". The token was created on 2026-11-13 without them. Nobody noticed, because the token page shows account permissions on a separate tab. So in Run 1 (2026-11-13) and in the repeat (2026-11-16) the two Codespaces operations in the frame, `codespaces/list-secrets-for-authenticated-user` and `codespaces/get-public-key-for-authenticated-user`, answered 403 "Resource not accessible by personal access token". That is a setup gap, not a finding: the pre-registration does not count a 403 caused by a permission limit. Both operations are recorded as not tested as designed (NT-1, NT-2).
+
+On 2026-11-16, between 13:06 and 13:19 UTC, Veljko added the two permissions to the same token. The token value did not change. Nothing else about the token changed.
+
+What changes in the method:
+
+- **The two Codespaces operations get their own first run and their own repeat,** at least 24 hours apart. Run 1 and the first repeat do not count for them.
+- **They are tested with plain GET requests, not with Schemathesis.** A full harness run costs about 128 requests, and the audit's limit of 400 leaves about 14. Each of the two runs sends one request per operation with `scripts/day2-repro.mjs` (the same headers as the harness). The saved body is then checked against the frozen description with the new `scripts/check-body.py`, which validates the status code and the response schema locally and sends nothing.
+- **The local checker was calibrated first** on the four responses saved earlier on 2026-11-16. It gave the same result as Schemathesis on each: the forbidden field on both advisory operations, the empty `environment_url`, and the undocumented 422.
+- **One check is weaker than in the harness:** the content type is read from the saved response headers by hand, not by the tool.
+- **The starred-repository operations are not rerun.** They answered 200 without the Starring permission in both runs, and their responses were checked then.
+
+No other operation is affected, and no result of Run 1 or the repeat changes.
+
